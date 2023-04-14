@@ -1,14 +1,12 @@
-require("dotenv").config();
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const PORT = process.env.PORT || 5000;
+const PORT = 5000;
 const User = require("./models/user");
 const Todo = require("./models/todo");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET, DATABASE } = require("./config/keys");
-const { JWT_SECRET } = process.env.JWT_SECRET;
 
 mongoose.connect(DATABASE, {
   useNewUrlParser: true,
