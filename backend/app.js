@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -6,11 +7,15 @@ const User = require("./models/user");
 const Todo = require("./models/todo");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { JWT_SECRET, DATABASE } = require("./config/keys");
+const JWT_SECRET = process.env.JWT_SECRET;
 
-mongoose.connect(DATABASE, {
-  useNewUrlParser: true,
-});
+mongoose.connect(
+  "mongodb+srv://test_user:OLqj4gDETCCSAkLy@cluster0.b3uu1y9.mongodb.net/reduxtodo?retryWrites=true&w=majority",
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  }
+);
 mongoose.connection.on("connected", () => {
   console.log("connected to db");
 });
@@ -110,7 +115,7 @@ app.delete("/remove/:id", requiredLogin, async (req, res) => {
   }
 });
 
-if ((process.env.NODE_ENV = "production")) {
+if (process.env.DEPLOYMENT === "production") {
   const path = require("path");
 
   app.get("/", (req, res) => {
